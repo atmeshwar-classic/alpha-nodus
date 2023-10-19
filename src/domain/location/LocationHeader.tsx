@@ -10,7 +10,7 @@ function LocationHeader({
   className?: string;
 }) {
   return (
-    <header className={cn("grid grid-cols-3 p-2 items-center", className)}>
+    <header className={cn("grid grid-cols-3 items-center", className)}>
       {children}
     </header>
   );
