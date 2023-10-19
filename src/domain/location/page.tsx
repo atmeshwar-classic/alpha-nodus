@@ -13,6 +13,7 @@ import { useGetLocations } from "./useGetLocations";
 import { Skeleton } from "components/ui/Skeleton";
 import { LocationCard } from "./LocationCard";
 import { NetworkStatus } from "@apollo/client";
+import { AddLocationDialog } from "./AddLocationDialog";
 
 export function LocationsPage() {
   const { data, loading, error, refetch, networkStatus } = useGetLocations();
@@ -54,9 +55,11 @@ export function LocationsPage() {
           <SymbolIcon />
         </LocationHeaderAction>
         <LocationHeaderTitle>Locations</LocationHeaderTitle>
-        <LocationHeaderAction variant="icon" className="justify-self-end">
-          <PlusIcon />
-        </LocationHeaderAction>
+        <AddLocationDialog>
+          <LocationHeaderAction variant="icon" className="justify-self-end">
+            <PlusIcon />
+          </LocationHeaderAction>
+        </AddLocationDialog>
       </LocationHeader>
 
       <Input
