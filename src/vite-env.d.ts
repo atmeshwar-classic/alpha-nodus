@@ -2,6 +2,7 @@
 
 interface ImportMetaEnv {
   readonly VITE_GQL_URL: string;
+  readonly VITE_GQL_ACCESS_TOKEN: string;
 }
 
 interface ImportMeta {
