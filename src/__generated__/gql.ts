@@ -13,6 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n  query LocationRead($locationReadId: String!, $tenant: String!) {\n    locationRead(id: $locationReadId, tenant: $tenant) {\n      id\n      resource {\n        address\n        alias\n        description\n        id\n        name\n        managingOrganization\n        updatedAt\n        type\n        taxId\n        status\n        npi\n      }\n    }\n  }\n": types.LocationReadDocument,
     "\n  mutation LocationCreate($requestBody: LocationWriteInput!, $tenant: String!) {\n    locationCreate(requestBody: $requestBody, tenant: $tenant) {\n      ... on Error {\n        error\n        message\n        statusCode\n      }\n      ... on LocationCommandResponse {\n        resourceID\n      }\n    }\n  }\n": types.LocationCreateDocument,
     "\n  query LocationList($tenant: String!, $page: Int, $search: String) {\n    locationList(tenant: $tenant, page: $page, search: $search) {\n      pages\n      resources {\n        address\n        alias\n        description\n        id\n        name\n        managingOrganization\n        updatedAt\n        type\n        taxId\n        status\n        npi\n      }\n    }\n  }\n": types.LocationListDocument,
 };
@@ -31,6 +32,10 @@ const documents = {
  */
 export function gql(source: string): unknown;
 
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query LocationRead($locationReadId: String!, $tenant: String!) {\n    locationRead(id: $locationReadId, tenant: $tenant) {\n      id\n      resource {\n        address\n        alias\n        description\n        id\n        name\n        managingOrganization\n        updatedAt\n        type\n        taxId\n        status\n        npi\n      }\n    }\n  }\n"): (typeof documents)["\n  query LocationRead($locationReadId: String!, $tenant: String!) {\n    locationRead(id: $locationReadId, tenant: $tenant) {\n      id\n      resource {\n        address\n        alias\n        description\n        id\n        name\n        managingOrganization\n        updatedAt\n        type\n        taxId\n        status\n        npi\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
