@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query ExampleQuery($tenant: String!) {\n    locationList(tenant: $tenant) {\n      pages\n      resources {\n        address\n        alias\n        description\n        id\n        name\n        managingOrganization\n        updatedAt\n        type\n        taxId\n        status\n        npi\n      }\n    }\n  }\n": types.ExampleQueryDocument,
+    "\n  query LocationList($tenant: String!) {\n    locationList(tenant: $tenant) {\n      pages\n      resources {\n        address\n        alias\n        description\n        id\n        name\n        managingOrganization\n        updatedAt\n        type\n        taxId\n        status\n        npi\n      }\n    }\n  }\n": types.LocationListDocument,
 };
 
 /**
@@ -33,7 +33,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query ExampleQuery($tenant: String!) {\n    locationList(tenant: $tenant) {\n      pages\n      resources {\n        address\n        alias\n        description\n        id\n        name\n        managingOrganization\n        updatedAt\n        type\n        taxId\n        status\n        npi\n      }\n    }\n  }\n"): (typeof documents)["\n  query ExampleQuery($tenant: String!) {\n    locationList(tenant: $tenant) {\n      pages\n      resources {\n        address\n        alias\n        description\n        id\n        name\n        managingOrganization\n        updatedAt\n        type\n        taxId\n        status\n        npi\n      }\n    }\n  }\n"];
+export function gql(source: "\n  query LocationList($tenant: String!) {\n    locationList(tenant: $tenant) {\n      pages\n      resources {\n        address\n        alias\n        description\n        id\n        name\n        managingOrganization\n        updatedAt\n        type\n        taxId\n        status\n        npi\n      }\n    }\n  }\n"): (typeof documents)["\n  query LocationList($tenant: String!) {\n    locationList(tenant: $tenant) {\n      pages\n      resources {\n        address\n        alias\n        description\n        id\n        name\n        managingOrganization\n        updatedAt\n        type\n        taxId\n        status\n        npi\n      }\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

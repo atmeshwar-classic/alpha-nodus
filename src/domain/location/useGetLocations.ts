@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import { gql } from "__generated__";
 
 const GET_LOCATIONS = gql(`
-  query ExampleQuery($tenant: String!) {
+  query LocationList($tenant: String!) {
     locationList(tenant: $tenant) {
       pages
       resources {
@@ -23,7 +23,7 @@ const GET_LOCATIONS = gql(`
   }
 `);
 
-export function useGetLocation() {
+export function useGetLocations() {
   const query = useQuery(GET_LOCATIONS, {
     variables: { tenant: import.meta.env.VITE_GQL_TENANT },
   });
