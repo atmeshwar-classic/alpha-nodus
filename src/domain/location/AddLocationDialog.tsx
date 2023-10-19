@@ -7,16 +7,49 @@ import {
   DialogTrigger,
 } from "components/ui/Dialog";
 import { Input } from "components/ui/Input";
-import { ReactNode } from "react";
+import { ReactNode, SyntheticEvent, useState } from "react";
+import { useCreateLocation } from "./useCreateLocation";
+import { LocationCreateMutation } from "__generated__/graphql";
 
-function Content_() {
+function Content_({ close }: { close: VoidFunction }) {
+  const { createLocation, loading, error } = useCreateLocation();
+
+  async function handleSubmit(e: SyntheticEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const name = new FormData(e.currentTarget)
+      .get("location")
+      ?.toString() as string;
+
+    const res = await createLocation({
+      variables: {
+        tenant: import.meta.env.VITE_GQL_TENANT,
+        requestBody: {
+          name,
+        },
+      },
+    });
+
+    const data = res.data as Extract<
+      LocationCreateMutation["locationCreate"],
+      { __typename?: "LocationCommandResponse" }
+    >;
+
+    if (data?.resourceID) {
+      close();
+    }
+  }
+
   return (
     <>
-      <DialogHeader className="space-y-3">
+      <DialogHeader className="space-y-4">
         <DialogTitle>Add Location</DialogTitle>
-        <form className="grid gap-4">
-          <Input placeholder="Name" />
-          <Button className="justify-self-end">Submit</Button>
+        <form onSubmit={handleSubmit}>
+          <fieldset className="grid gap-4" disabled={loading}>
+            <Input placeholder="Name" required name="location" />
+            {error && <p>{error.message}</p>}
+            <Button className="justify-self-end">Submit</Button>
+          </fieldset>
         </form>
       </DialogHeader>
     </>
@@ -24,12 +57,14 @@ function Content_() {
 }
 
 export function AddLocationDialog({ children }: { children: ReactNode }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
       <DialogContent>
-        <Content_ />
+        <Content_ close={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );
