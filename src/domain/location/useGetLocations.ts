@@ -26,6 +26,7 @@ const GET_LOCATIONS = gql(`
 export function useGetLocations() {
   const query = useQuery(GET_LOCATIONS, {
     variables: { tenant: import.meta.env.VITE_GQL_TENANT },
+    notifyOnNetworkStatusChange: true,
   });
 
   return query;

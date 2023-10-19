@@ -12,12 +12,13 @@ import {
 import { useGetLocations } from "./useGetLocations";
 import { Skeleton } from "components/ui/Skeleton";
 import { LocationCard } from "./LocationCard";
+import { NetworkStatus } from "@apollo/client";
 
 export function LocationsPage() {
-  const { data, loading, error } = useGetLocations();
+  const { data, loading, error, refetch, networkStatus } = useGetLocations();
 
   function Content_() {
-    if (loading) {
+    if (loading || networkStatus === NetworkStatus.refetch) {
       return (
         <div className="my-4 space-y-3">
           <Skeleton className="w-full h-20" />
@@ -46,7 +47,10 @@ export function LocationsPage() {
   return (
     <div className="p-4 space-y-3 grid grid-rows-[repeat(2,auto)_1fr]">
       <LocationHeader>
-        <LocationHeaderAction className="px-10 justify-self-start">
+        <LocationHeaderAction
+          className="px-10 justify-self-start"
+          onClick={() => refetch()}
+        >
           <SymbolIcon />
         </LocationHeaderAction>
         <LocationHeaderTitle>Locations</LocationHeaderTitle>
