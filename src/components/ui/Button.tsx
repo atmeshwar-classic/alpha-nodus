@@ -7,7 +7,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "px-4 py-2 border border-slate-700",
-        icon: "w-10 h-10",
+        icon: "w-10 h-10 inline-grid place-items-center",
       },
     },
     defaultVariants: {
