@@ -12,7 +12,7 @@ export function LocationCard({
   id,
 }: LocationCardProps) {
   return (
-    <Link to={`/${id}`}>
+    <Link to={`/${id}`} className="block">
       <div className="border border-slate-500 bg-white shadow-sm rounded-md p-4 grid grid-cols-[2fr_1fr] gap-3">
         <h3 className="font-semibold text-lg col-start-1 row-start-1">
           {name}

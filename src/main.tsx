@@ -30,6 +30,25 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache({
     addTypename: false,
+    typePolicies: {
+      Query: {
+        fields: {
+          locationList: {
+            keyArgs: false,
+            merge(existing, incoming) {
+              console.log(existing, incoming);
+              return {
+                pages: incoming.pages,
+                resources: [
+                  ...(existing?.resources ?? []),
+                  ...incoming.resources,
+                ],
+              };
+            },
+          },
+        },
+      },
+    },
   }),
 });
 

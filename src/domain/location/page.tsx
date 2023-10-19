@@ -14,12 +14,33 @@ import { Skeleton } from "components/ui/Skeleton";
 import { LocationCard } from "./LocationCard";
 import { NetworkStatus } from "@apollo/client";
 import { AddLocationDialog } from "./AddLocationDialog";
+import { useState } from "react";
+import { Waypoint } from "react-waypoint";
 
 export function LocationsPage() {
-  const { data, loading, error, refetch, networkStatus } = useGetLocations();
+  const [page, setPage] = useState(0);
+  const { data, loading, error, refetch, networkStatus, fetchMore } =
+    useGetLocations();
+  const [search] = useState("");
+
+  const hasNextPage = data?.locationList?.pages
+    ? page < data?.locationList?.pages - 1
+    : false;
+
+  async function loadMore() {
+    const newPage = page + 1;
+    await fetchMore({
+      variables: {
+        tenant: import.meta.env.VITE_GQL_TENANT,
+        search: search || undefined,
+        page: newPage,
+      },
+    });
+    setPage(newPage);
+  }
 
   function Content_() {
-    if (loading || networkStatus === NetworkStatus.refetch) {
+    if (networkStatus === NetworkStatus.refetch) {
       return (
         <div className="my-4 space-y-3">
           <Skeleton className="w-full h-20" />
@@ -31,17 +52,26 @@ export function LocationsPage() {
       );
     }
 
-    if (error) {
-      return (
-        <div className="my-4 space-y-2 text-center">
-          <h2 className="text-xl font-semibold">Something went wrong!</h2>
-          <p className="text-red-600">{error.message}</p>
-        </div>
-      );
-    }
+    return (
+      <div className="space-y-3">
+        {data?.locationList?.resources?.map((l) =>
+          l ? <LocationCard {...l} /> : null
+        )}
+        {error && (
+          <div className="my-4 space-y-2 text-center">
+            <h2 className="text-xl font-semibold">Something went wrong!</h2>
+            <p className="text-red-600">{error.message}</p>
+          </div>
+        )}
+        {(loading || hasNextPage) && (
+          <div className="my-4 space-y-3">
+            <Skeleton className="w-full h-20" />
+            <Skeleton className="w-full h-20" />
+          </div>
+        )}
 
-    return data?.locationList?.resources?.map((l) =>
-      l ? <LocationCard {...l} /> : null
+        {!loading && hasNextPage && <Waypoint onEnter={loadMore} />}
+      </div>
     );
   }
 

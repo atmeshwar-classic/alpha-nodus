@@ -3,8 +3,8 @@ import { useQuery } from "@apollo/client";
 import { gql } from "__generated__";
 
 const GET_LOCATIONS = gql(`
-  query LocationList($tenant: String!) {
-    locationList(tenant: $tenant) {
+  query LocationList($tenant: String!, $page: Int, $search: String) {
+    locationList(tenant: $tenant, page: $page, search: $search) {
       pages
       resources {
         address
