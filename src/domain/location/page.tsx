@@ -54,7 +54,7 @@ export function LocationsPage() {
   }
 
   return (
-    <main className="max-w-3xl mx-auto p-4 space-y-3">
+    <div className="p-4 space-y-3 grid grid-rows-[repeat(2,auto)_1fr]">
       <LocationHeader>
         <LocationHeaderAction className="px-10 justify-self-start">
           <SymbolIcon />
@@ -71,6 +71,6 @@ export function LocationsPage() {
       />
 
       <Content_ />
-    </main>
+    </div>
   );
 }
