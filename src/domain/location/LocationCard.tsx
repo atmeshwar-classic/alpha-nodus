@@ -18,10 +18,10 @@ export function LocationCard({
           {name}
         </h3>
         <p className="col-span-2 col-start-1 row-start-2">{address ?? "N/A"}</p>
-        <span className="col-start-2 row-start-1 rounded-full p-3 bg-amber-300">
+        <span className="col-start-2 row-start-1 rounded-full p-2 bg-amber-300 text-xs justify-self-end">
           {status ?? "N/A"}
         </span>
-        <span className="col-start-2 row-start-2 text-gray-400">
+        <span className="col-start-2 row-start-2 text-gray-400 justify-self-end self-end text-xs">
           {hoursSinceUpdate(updatedAt)}
         </span>
       </div>
