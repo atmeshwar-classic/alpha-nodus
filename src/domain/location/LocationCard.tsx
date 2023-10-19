@@ -1,13 +1,7 @@
 import { hoursSinceUpdate } from "utils/hoursSinceUpdate";
+import { Location } from "__generated__/graphql";
 
-type LocationCardProps = {
-  name: string;
-  id: string;
-  address?: string | null;
-  type?: string | null;
-  status?: string | null;
-  updatedAt?: number | null;
-};
+type LocationCardProps = Location;
 
 export function LocationCard({
   name,

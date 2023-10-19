@@ -39,17 +39,7 @@ export function LocationsPage() {
     }
 
     return data?.locationList?.resources?.map((l) =>
-      l ? (
-        <LocationCard
-          key={l.id}
-          id={l.id}
-          name={l.name}
-          address={l.address}
-          type={l.type}
-          updatedAt={l.updatedAt}
-          status={l.status}
-        />
-      ) : null
+      l ? <LocationCard {...l} /> : null
     );
   }
 
