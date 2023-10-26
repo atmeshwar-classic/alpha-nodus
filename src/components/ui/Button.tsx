@@ -8,6 +8,8 @@ const buttonVariants = cva(
       variant: {
         default: "px-4 py-2 border border-slate-700",
         icon: "w-10 h-10 inline-grid place-items-center",
+        destructive:
+          "px-4 py-2 bg-red-600 text-white border border-red-600 hover:bg-red-400",
       },
     },
     defaultVariants: {

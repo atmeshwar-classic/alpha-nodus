@@ -13,6 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n  mutation LocationDelete($locationRemoveId: String!, $tenant: String!) {\n    locationRemove(id: $locationRemoveId, tenant: $tenant) {\n      ... on LocationCommandResponse {\n        resourceID\n      }\n      ... on Error {\n        error\n        message\n        statusCode\n      }\n    }\n  }\n": types.LocationDeleteDocument,
     "\n  query LocationRead($locationReadId: String!, $tenant: String!) {\n    locationRead(id: $locationReadId, tenant: $tenant) {\n      id\n      resource {\n        address\n        alias\n        description\n        id\n        name\n        managingOrganization\n        updatedAt\n        type\n        taxId\n        status\n        npi\n      }\n    }\n  }\n": types.LocationReadDocument,
     "\n  mutation LocationPatch(\n    $locationPatchId: String!\n    $requestBody: LocationPatchInput!\n    $tenant: String!\n  ) {\n    locationPatch(\n      id: $locationPatchId\n      requestBody: $requestBody\n      tenant: $tenant\n    ) {\n      ... on LocationCommandResponse {\n        resourceID\n      }\n      ... on Error {\n        error\n        message\n        statusCode\n      }\n    }\n  }\n": types.LocationPatchDocument,
     "\n  mutation LocationCreate($requestBody: LocationWriteInput!, $tenant: String!) {\n    locationCreate(requestBody: $requestBody, tenant: $tenant) {\n      ... on Error {\n        error\n        message\n        statusCode\n      }\n      ... on LocationCommandResponse {\n        resourceID\n      }\n    }\n  }\n": types.LocationCreateDocument,
@@ -33,6 +34,10 @@ const documents = {
  */
 export function gql(source: string): unknown;
 
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation LocationDelete($locationRemoveId: String!, $tenant: String!) {\n    locationRemove(id: $locationRemoveId, tenant: $tenant) {\n      ... on LocationCommandResponse {\n        resourceID\n      }\n      ... on Error {\n        error\n        message\n        statusCode\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation LocationDelete($locationRemoveId: String!, $tenant: String!) {\n    locationRemove(id: $locationRemoveId, tenant: $tenant) {\n      ... on LocationCommandResponse {\n        resourceID\n      }\n      ... on Error {\n        error\n        message\n        statusCode\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

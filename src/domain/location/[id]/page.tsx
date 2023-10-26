@@ -1,4 +1,8 @@
-import { SymbolIcon, Pencil1Icon } from "@radix-ui/react-icons";
+import {
+  SymbolIcon,
+  Pencil1Icon,
+  DotsHorizontalIcon,
+} from "@radix-ui/react-icons";
 import {
   LocationHeader,
   LocationHeaderAction,
@@ -9,6 +13,9 @@ import { useParams } from "react-router-dom";
 import { NetworkStatus } from "@apollo/client";
 import { Skeleton } from "components/ui/Skeleton";
 import { EditLocationDialog } from "./EditLocationDialog";
+import { Popover, PopoverContent, PopoverTrigger } from "components/ui/Popover";
+import { Button } from "components/ui/Button";
+import { DeleteLocationDialog } from "./DeleteLocationDialog";
 
 export function LocationSlugPage() {
   const { id } = useParams() as { id: string };
@@ -39,40 +46,55 @@ export function LocationSlugPage() {
     const resource = data?.locationRead?.resource;
 
     return (
-      <table className="mt-4 border border-collapse">
-        <tr className="border">
-          <td className="text-2xl border p-2">Name</td>
-          <td className="align-middle border p-2">{resource?.name}</td>
-        </tr>
-        <tr className="border">
-          <td className="text-2xl border p-2">Address</td>
-          <td className="align-middle border p-2">{resource?.address}</td>
-        </tr>
-        <tr className="border">
-          <td className="text-2xl border p-2">Status</td>
-          <td className="align-middle border p-2">{resource?.status}</td>
-        </tr>
-        <tr className="border">
-          <td className="text-2xl border p-2">Alias</td>
-          <td className="align-middle border p-2">{resource?.alias}</td>
-        </tr>
-        <tr className="border">
-          <td className="text-2xl border p-2">TaxID</td>
-          <td className="align-middle border p-2">{resource?.taxId}</td>
-        </tr>
-        <tr className="border">
-          <td className="text-2xl border p-2">Type</td>
-          <td className="align-middle border p-2">{resource?.type}</td>
-        </tr>
-        <tr className="border">
-          <td className="text-2xl border p-2">UpdatedAt</td>
-          <td className="align-middle border p-2">
-            {resource?.updatedAt
-              ? new Date(resource?.updatedAt).toLocaleDateString()
-              : "N/A"}
-          </td>
-        </tr>
-      </table>
+      <div className="space-y-6 mt-4">
+        {resource && (
+          <Popover>
+            <PopoverTrigger>
+              <Button variant="icon">
+                <DotsHorizontalIcon />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="py-2">
+              <DeleteLocationDialog id={resource.id} />
+            </PopoverContent>
+          </Popover>
+        )}
+
+        <table className="mt-4 border border-collapse w-full">
+          <tr className="border">
+            <td className="text-2xl border p-2">Name</td>
+            <td className="align-middle border p-2">{resource?.name}</td>
+          </tr>
+          <tr className="border">
+            <td className="text-2xl border p-2">Address</td>
+            <td className="align-middle border p-2">{resource?.address}</td>
+          </tr>
+          <tr className="border">
+            <td className="text-2xl border p-2">Status</td>
+            <td className="align-middle border p-2">{resource?.status}</td>
+          </tr>
+          <tr className="border">
+            <td className="text-2xl border p-2">Alias</td>
+            <td className="align-middle border p-2">{resource?.alias}</td>
+          </tr>
+          <tr className="border">
+            <td className="text-2xl border p-2">TaxID</td>
+            <td className="align-middle border p-2">{resource?.taxId}</td>
+          </tr>
+          <tr className="border">
+            <td className="text-2xl border p-2">Type</td>
+            <td className="align-middle border p-2">{resource?.type}</td>
+          </tr>
+          <tr className="border">
+            <td className="text-2xl border p-2">UpdatedAt</td>
+            <td className="align-middle border p-2">
+              {resource?.updatedAt
+                ? new Date(resource?.updatedAt).toLocaleDateString()
+                : "N/A"}
+            </td>
+          </tr>
+        </table>
+      </div>
     );
   }
 
