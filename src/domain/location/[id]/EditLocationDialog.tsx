@@ -142,7 +142,6 @@ export function EditLocationDialog({
   const [open, setOpen] = useState(false);
 
   function onContentClose() {
-    console.log("here");
     setOpen(false);
     onSuccess();
   }
