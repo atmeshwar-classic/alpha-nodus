@@ -14,29 +14,46 @@ import { Skeleton } from "components/ui/Skeleton";
 import { LocationCard } from "./LocationCard";
 import { NetworkStatus } from "@apollo/client";
 import { AddLocationDialog } from "./AddLocationDialog";
-import { useState } from "react";
+import { ChangeEvent, useRef } from "react";
 import { Waypoint } from "react-waypoint";
+import { debounce } from "utils/debounce";
 
 export function LocationsPage() {
-  const [page, setPage] = useState(0);
   const { data, loading, error, refetch, networkStatus, fetchMore } =
     useGetLocations();
-  const [search] = useState("");
+
+  const searchRef = useRef("");
+  const pageRef = useRef(0);
 
   const hasNextPage = data?.locationList?.pages
-    ? page < data?.locationList?.pages - 1
+    ? pageRef.current < data?.locationList?.pages - 1
     : false;
 
   async function loadMore() {
-    const newPage = page + 1;
+    const newPage = pageRef.current + 1;
+
     await fetchMore({
       variables: {
         tenant: import.meta.env.VITE_GQL_TENANT,
-        search: search || undefined,
+        search: searchRef.current || undefined,
         page: newPage,
       },
     });
-    setPage(newPage);
+
+    pageRef.current = newPage;
+  }
+
+  async function onSearch(e: ChangeEvent<HTMLInputElement>) {
+    e.persist();
+
+    const { value } = e.target;
+    searchRef.current = value;
+
+    await refetch({
+      tenant: import.meta.env.VITE_GQL_TENANT,
+      search: value,
+      page: 0,
+    });
   }
 
   function Content_() {
@@ -95,6 +112,7 @@ export function LocationsPage() {
       <Input
         placeholder="Search"
         prefixIcon={<MagnifyingGlassIcon className="h-5 w-5" />}
+        onChange={debounce(onSearch, 300)}
       />
 
       <Content_ />
