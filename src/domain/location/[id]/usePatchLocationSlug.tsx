@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { gql } from "__generated__/gql";
 
-const PATHC_LOCATION = gql(`
+const PATCH_LOCATION = gql(`
   mutation LocationPatch(
     $locationPatchId: String!
     $requestBody: LocationPatchInput!
@@ -25,7 +25,7 @@ const PATHC_LOCATION = gql(`
 `);
 
 export function usePatchLocationSlug() {
-  const [patchLocation, rest] = useMutation(PATHC_LOCATION);
+  const [patchLocation, rest] = useMutation(PATCH_LOCATION);
 
   return { patchLocation, ...rest };
 }
