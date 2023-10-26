@@ -30,12 +30,14 @@ function Content_({ close }: { close: VoidFunction }) {
       },
     });
 
-    const data = res.data as Extract<
-      LocationCreateMutation["locationCreate"],
-      { __typename?: "LocationCommandResponse" }
-    >;
-
-    if (data?.resourceID) {
+    if (
+      (
+        res.data?.locationCreate as Extract<
+          LocationCreateMutation["locationCreate"],
+          { __typename?: "LocationCommandResponse" }
+        >
+      ).resourceID
+    ) {
       close();
     }
   }
