@@ -1,4 +1,4 @@
-import { SymbolIcon } from "@radix-ui/react-icons";
+import { SymbolIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import {
   LocationHeader,
   LocationHeaderAction,
@@ -8,6 +8,7 @@ import { useGetLocationSlug } from "./useGetLocationSlug";
 import { useParams } from "react-router-dom";
 import { NetworkStatus } from "@apollo/client";
 import { Skeleton } from "components/ui/Skeleton";
+import { EditLocationDialog } from "./EditLocationDialog";
 
 export function LocationSlugPage() {
   const { id } = useParams() as { id: string };
@@ -87,6 +88,16 @@ export function LocationSlugPage() {
         <LocationHeaderTitle>
           {data?.locationRead?.resource.name ?? "N/A"}
         </LocationHeaderTitle>
+        {data?.locationRead?.resource && (
+          <EditLocationDialog
+            location={data?.locationRead?.resource}
+            onSuccess={refetch}
+          >
+            <LocationHeaderAction className="justify-self-end" variant="icon">
+              <Pencil1Icon />
+            </LocationHeaderAction>
+          </EditLocationDialog>
+        )}
       </LocationHeader>
 
       <Content_ />
